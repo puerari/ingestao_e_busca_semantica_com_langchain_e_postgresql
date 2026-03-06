@@ -3,7 +3,7 @@
 Este projeto é a implementação de um desafio técnico do MBA em Engenharia de Software com IA da Faculdade FullCycle.
 
 Consiste em um sistema de RAG (Retrieval-Augmented Generation) utilizando LangChain, PostgreSQL com pgvector para 
-armazenamento vetorial, e Google Gemini para embeddings e geração de respostas.
+armazenamento vetorial, e Google Gemini ou GPT OpenAI para embeddings e geração de respostas.
 
 ## Funcionalidades
 
