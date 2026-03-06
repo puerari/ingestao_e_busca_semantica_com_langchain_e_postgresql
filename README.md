@@ -1,129 +1,111 @@
-# Sistema de Busca Semântica com LangChain e PostgreSQL
+# Semantic Search System with LangChain and PostgreSQL
 
-Este projeto é a implementação de um desafio técnico do MBA em Engenharia de Software com IA da Faculdade FullCycle.
+This project is the implementation of a technical challenge from the MBA in Software Engineering with AI at Faculdade FullCycle.
 
-Consiste em um sistema de RAG (Retrieval-Augmented Generation) utilizando LangChain, PostgreSQL com pgvector para 
-armazenamento vetorial, e Google Gemini ou GPT OpenAI para embeddings e geração de respostas.
+It consists of a RAG (Retrieval-Augmented Generation) system using LangChain, PostgreSQL with pgvector for vector storage, and Google Gemini or OpenAI GPT for embeddings and answer generation.
 
-## Funcionalidades
+## Features
 
-- **Ingestão de Documentos PDF**: Processa e armazena documentos PDF em um banco vetorial
-- **Busca Semântica**: Realiza buscas baseadas em significado semântico
-- **Chat RAG**: Interface de chat interativa que responde perguntas com base nos documentos ingeridos
+- **PDF Document Ingestion**: Processes and stores PDF documents in a vector database.
+- **Semantic Search**: Performs searches based on semantic meaning.
+- **RAG Chat**: Interactive chat interface that answers questions based on the ingested documents.
 
-## Configuração do Ambiente
 
-Para configurar o ambiente e instalar as dependências do projeto, siga os passos abaixo:
+## Environment Setup
 
-1. **Criar e ativar um ambiente virtual (`venv`):**
+To set up the environment and install the project dependencies, follow the steps below.
 
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # No Windows: venv\Scripts\activate
-   ```
+1. **Create and activate a virtual environment (`venv`):**
 
-2. **Instalar as dependências:**
+```bash
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+2. **Install dependencies:**
 
-3. **Configurar as variáveis de ambiente:**
+```bash
+pip install -r requirements.txt
+```
 
-   - Duplique o arquivo `.env.example` e renomeie para `.env`
-   ```bash
-   cp .env.example .env
-   ```
-   - Abra o arquivo `.env` e substitua os valores pelas suas chaves de API reais obtidas conforme instruções abaixo
+3. **Set environment variables:**
+    - Duplicate the `.env.example` file and rename it to `.env`.
 
-4. **Instalar PostgreSQL via Docker:**
+```bash
+cp .env.example .env
+```
 
-   ```bash
-   docker-compose up -d
-   ```
+- Open the `.env` file and replace the values with your real API keys obtained as per the instructions below.
 
-## Requisitos para Execução dos Códigos
+4. **Install PostgreSQL via Docker:**
 
-Para executar os códigos, é necessário criar chaves de API (API Keys) para os serviços da OpenAI ou do Google Gemini.
-Abaixo, fornecemos instruções detalhadas para a criação dessas chaves.
+```bash
+docker-compose up -d
+```
 
-**Para utilizar a OpenAi, comente a chave do Google no .env**
 
-### Criando uma API Key na OpenAI
+## Requirements to Run the Code
 
-1. **Acesse o site da OpenAI:**
+To run the code, you must create API Keys for the OpenAI or Google Gemini services.
+Below are detailed instructions for creating these keys.
 
-   [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)
+**To use OpenAI, comment out the Google key in `.env`.**
 
-2. **Faça login ou crie uma conta:**
+### Creating an API Key in OpenAI
 
-   - Se já possuir uma conta, clique em "Log in" e insira suas credenciais.
-   - Caso contrário, clique em "Sign up" para criar uma nova conta.
+1. **Go to the OpenAI website:** 
+    - https://platform.openai.com/account/api-keys
+2. **Log in or create an account:**
+    - If you already have an account, click “Log in” and enter your credentials.
+    - Otherwise, click “Sign up” to create a new account.
+3. **Go to the API Keys section:**
+    - After logging in, click “API Keys” in the left sidebar.
+4. **Create a new API Key:**
+    - Click the “Create new secret key” button.
+    - Give the key a name that you can easily identify.
+    - Click “Create secret key”.
+5. **Copy and store your API Key:**
+    - The key will be shown only once. Copy it and paste it into the `.env` file in the `OPENAI_API_KEY` variable.
 
-3. **Navegue até a seção de API Keys:**
+### Creating an API Key in Google Gemini
 
-   - Após o login, clique em "API Keys" no menu lateral esquerdo.
+1. **Access Google AI Studio:**
+    - https://ai.google.dev/gemini-api/docs/api-key?hl=pt-BR
+2. **Log in with your Google account:**
+    - Use your Google account to access AI Studio.
+3. **Go to the API Keys section:**
+    - In the dashboard, click “API Keys” or “Chaves de API”.
+4. **Create a new API Key:**
+    - Click “Create API Key” or “Criar chave de API”.
+    - Give the key a name that you can easily identify.
+    - The key will be generated and shown on the screen.
+5. **Copy and store your API Key:**
+    - Copy the generated key and paste it into the `.env` file in the `GOOGLE_API_KEY` variable.
 
-4. **Crie uma nova API Key:**
+### PDF File
 
-   - Clique no botão "Create new secret key".
-   - Dê um nome para a chave que a identifique facilmente.
-   - Clique em "Create secret key".
+This repository contains the file `document.pdf` with an article about the history of Linux (in portuguese), which can 
+be used for content ingestion into the vector database. If you wish, you can replace this file with a PDF of your choice.
 
-5. **Copie e armazene sua API Key:**
+***
 
-   - A chave será exibida uma única vez. Copie-a e cole no arquivo `.env` na variável `OPENAI_API_KEY`.
+## Execution
 
-Para mais detalhes, consulte o tutorial completo: [Como Gerar uma API Key na OpenAI?](https://hub.asimov.academy/tutorial/como-gerar-uma-api-key-na-openai/)
+### 1. PDF Ingestion
 
-### Criando uma API Key no Google Gemini
+```bash
+python3 src/ingest.py
+```
 
-1. **Acesse o Google AI Studio:**
+### 2. Start the chat
 
-   [https://ai.google.dev/gemini-api/docs/api-key?hl=pt-BR](https://ai.google.dev/gemini-api/docs/api-key?hl=pt-BR)
+```bash
+python3 src/chat.py
+```
 
-2. **Faça login com sua conta Google:**
+- Ask questions about the PDF content.
 
-   - Utilize sua conta Google para acessar o AI Studio.
 
-3. **Navegue até a seção de chaves de API:**
+### 3. Exit
 
-   - No painel de controle, clique em "API Keys" ou "Chaves de API".
-
-4. **Crie uma nova API Key:**
-
-   - Clique em "Create API Key" ou "Criar chave de API".
-   - Dê um nome para a chave que a identifique facilmente.
-   - A chave será gerada e exibida na tela.
-
-5. **Copie e armazene sua API Key:**
-
-   - Copie a chave gerada e cole no arquivo `.env` na variável `GOOGLE_API_KEY`.
-
-Para mais informações, consulte a documentação oficial: [Como usar chaves da API Gemini](https://ai.google.dev/gemini-api/docs/api-key?hl=pt-BR)
-
-### Arquivo PDF
-Este repositório contém o arquivo document.pdf com um relato sobre a história do Linux, o qual pode ser utilizado como
-para ingestão de conteúdo no banco vetorial. Caso deseje, você pode substituir este arquivo por um PDF de sua escolha.
-
----
-
-## Execução
-
-### 1. Ingestão do PDF
-
-   ```bash
-   python3 src/ingest.py
-   ```
-
-### 2. Iniciar o chat
-
-   ```bash
-   python3 src/chat.py
-   ```
-
-- Faça perguntas sobre o conteúdo do PDF.
-
-### 3. Encerrar
-
-- Digite **'sair'**, **'exit'** ou **'quit'** para encerrar o script.
+- Type **'exit'** to terminate the script.
